@@ -49,7 +49,7 @@ try {
     //var_dump($request_token_info);
     $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
     $_SESSION['state'] = 1;
-    header('Location: '.$auth_url.'?vo=iugalaxy&oauth_token='.$request_token_info['oauth_token']);
+    header('Location: '.$auth_url.'?oauth_token='.$request_token_info['oauth_token']);
     file_put_contents('php://stderr', print_r($oauth->debugInfo, TRUE));
     exit;
   } else if($_SESSION['state']==1) {
@@ -79,9 +79,10 @@ try {
   file_put_contents($x509userfile, $usercert);
   file_put_contents($x509userfile, $privrsakey, FILE_APPEND);
   chmod($x509userfile, 0600);
-  //$_SESSION['GAAMPUser']=$user;
+  $_SESSION['GAAMPUser']=$username;
+  setcookie('GAAMPUser', $username);
   //setcookie('GAAMPUser', $_SESSION['GAAMPUser']); 
-  //header('Location: /hello_gaamp.php');
+  header('Location: /hello_gaamp.php');
 } catch(OAuthException $E) { 
   print_r($E);
 }
