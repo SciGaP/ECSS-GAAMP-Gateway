@@ -40,7 +40,7 @@ session_start();
 if(!isset($_GET['oauth_token']) && $_SESSION['state']==1) $_SESSION['state'] = 0;
 try {
   $oauth = new OAuth($conskey,'',OAUTH_SIG_METHOD_RSASHA1,OAUTH_AUTH_TYPE_URI);
-  $oauth->setRSACertificate(file_get_contents('oauth-privkey.pk8'));
+  $oauth->setRSACertificate(file_get_contents($pkeyfile));
   $oauth->enableDebug();
   file_put_contents('php://stderr', print_r($oauth->debugInfo, TRUE));
   if(!isset($_GET['oauth_token']) && !$_SESSION['state']) {
